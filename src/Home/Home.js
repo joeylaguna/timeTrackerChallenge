@@ -1,10 +1,38 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import TimeTrackerTable from './../TimeTrackerTable.js';
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      profile: {}
+    }
+  }
+
+  componentWillMount() {
+    this.setState({
+      profile: {}
+    });
+
+    const { userProfile, getProfile } = this.props.auth;
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({
+          profile: profile
+        });
+      });
+    } else {
+      this.setState({
+        profile: userProfile
+      });
+    }
+  }
+
   login() {
     this.props.auth.login();
   }
+
   render() {
     const { isAuthenticated } = this.props.auth;
     return (
@@ -12,9 +40,8 @@ class Home extends Component {
         {
           isAuthenticated() && (
               <h4>
-                You are logged in! You can now view your{' '}
-                <Link to="profile">profile area</Link>
-                .
+                Hello, {this.state.profile.given_name}!
+                {this.state.profile.sub ? <TimeTrackerTable /> : ''}
               </h4>
             )
         }
