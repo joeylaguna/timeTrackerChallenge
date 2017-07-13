@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormGroup, Button, FormControl, ControlLabel, Table} from 'react-bootstrap';
 
 
-class Home extends Component {
+class AdminForm extends Component {
   constructor() {
     super();
     this.state = {
