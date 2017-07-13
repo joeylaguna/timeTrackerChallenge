@@ -42,14 +42,15 @@ class TimeTrackerTable extends Component {
       tasks: tasks
     });
 
-    axios.post(`/tasks/${this.props.id}/${newTask.name}/${newTask.timeSpent}`)
+    let userID = this.props.profile.sub.split('|')[1];
+    axios.post(`/tasks/${userID}/${newTask.task_name}/${newTask.timeSpent}`)
       .then((res) => {
         console.log(res);
       })
       .catch ((err) => {
         console.log(err);
       });
-    this.getUserTasks();
+    this.getTasks();
   }
 
   updateTaskName(e) {
