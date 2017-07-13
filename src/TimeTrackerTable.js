@@ -25,6 +25,7 @@ class TimeTrackerTable extends Component {
     this.compareDate = this.compareDate.bind(this);
     this.showModal = this.showModal.bind(this);
     this.updateItems = this.updateItems.bind(this);
+    this.getTasks = this.getTasks.bind(this);
   }
 
   handleSubmit(e) {
@@ -40,6 +41,15 @@ class TimeTrackerTable extends Component {
     this.setState({
       tasks: tasks
     });
+
+    axios.post(`/tasks/${this.props.id}/${newTask.name}/${newTask.timeSpent}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch ((err) => {
+        console.log(err);
+      });
+    this.getUserTasks();
   }
 
   updateTaskName(e) {
@@ -77,6 +87,19 @@ class TimeTrackerTable extends Component {
     });
   }
 
+  getTasks() {
+    let userID = this.props.profile.sub.split('|')[1];
+    axios.get(`/tasks/${userID}`)
+      .then((res) => {
+        this.setState({
+          tasks: res.data.rows
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   componentDidMount() {
     //Post userinfo to DB
     let userID = this.props.profile.sub.split('|')[1];
@@ -88,6 +111,7 @@ class TimeTrackerTable extends Component {
       .catch((err) => {
         console.log(err);
       });
+    this.getTasks();
   }
 
   render() {
