@@ -31,7 +31,11 @@ class UpdateForm extends Component {
     let itemToUpdate = tasks[index];
     itemToUpdate['task_name'] = this.state.taskName;
     itemToUpdate['timeSpent'] = this.state.timeSpent;
-    this.props.updateItem(tasks);
+    axios.post(`/update/${index}/${this.state.taskName}/${this.state.timeSpent}`)
+      .then((res) => {
+        this.props.getTasks();
+      })
+    this.props.updateItem();
   }
 
 
