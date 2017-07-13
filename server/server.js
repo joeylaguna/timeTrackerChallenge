@@ -68,7 +68,7 @@ app.post('/update/:userID/:index/:taskName/:timeSpent', function(request, respon
   let timeSpent = request.params.timeSpent;
   let userID = request.params.userID;
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(`UPDATE tasks SET task_name = '${taskName}', time_spent='${timeSpent}'  where id=${index} AND user_id='${userID}'`, function(err, result) {
+    client.query(`UPDATE tasks SET task_name = '${taskName}', time_spent='${timeSpent}'  where task_name=${taskName} AND user_id='${userID}'`, function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
