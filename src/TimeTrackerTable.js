@@ -152,7 +152,7 @@ class TimeTrackerTable extends Component {
                 return (<tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.task_name}</td>
-                  <td>{item.timeSpent}</td>
+                  <td>{item.time_spent}</td>
                   <td>{item.date}</td>
                   <td>
                     {this.compareDate(index) ? <Button onClick={this.showModal.bind(null, index)}>Edit</Button> : <Button disabled>Edit</Button>}
