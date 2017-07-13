@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
-import { Table, Form, FormGroup, Button, FormControl, ControlLabel } from 'react-bootstrap';
+import { Table, Form, FormGroup, Button, FormControl, ControlLabel, Modal } from 'react-bootstrap';
   
 class TimeTrackerTable extends Component {
   constructor() {
     super();
     this.state = {
-      tasks: [],
+      tasks: [
+        {
+          'task_name': 'test task',
+          'timeSpent': '2 hours',
+          'date':  "2017-07-12"
+        }
+      ],
       taskName: '',
       timeSpent: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateTaskName = this.updateTaskName.bind(this);
     this.updateTimeSpent = this.updateTimeSpent.bind(this);
+    this.compareDate = this.compareDate.bind(this);
+    this.showModal = this.showModal.bind(this);
   }
 
   handleSubmit(e) {
-    console.log('ASDFASDFS');
     e.preventDefault();
     let newTask = {};
     let date = new Date();
@@ -40,6 +47,20 @@ class TimeTrackerTable extends Component {
     this.setState({
       timeSpent: e.target.value
     });
+  }
+
+  compareDate(index) {
+    let currentDate = new Date();
+    console.log(index);
+    currentDate = currentDate.toISOString().substring(0, 10);
+    if (currentDate === this.state.tasks[index].date) {
+      return true;
+    }
+    return false;
+  }
+
+  showModal(index) {
+    console.log(index);
   }
 
   render() {
@@ -80,6 +101,9 @@ class TimeTrackerTable extends Component {
                   <td>{item.task_name}</td>
                   <td>{item.timeSpent}</td>
                   <td>{item.date}</td>
+                  <td>
+                    {this.compareDate(index) ? <Button onClick={this.showModal.bind(null, index)}>Edit</Button> : <Button disabled>Edit</Button>}
+                  </td>
                 </tr>)
               })
             }
