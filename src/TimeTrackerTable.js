@@ -76,6 +76,19 @@ class TimeTrackerTable extends Component {
     });
   }
 
+  componentDidMount() {
+    //Post userinfo to DB
+    let userID = this.props.profile.sub.split('|')[1];
+    let name = this.props.profile.given_name;
+    axios.post(`/users/${userID}/${name}`)
+      .then((res) => {
+        console.log('posted to db!')
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <div>

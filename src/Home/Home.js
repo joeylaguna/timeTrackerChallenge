@@ -41,7 +41,7 @@ class Home extends Component {
           isAuthenticated() && (
               <h4>
                 Hello, {this.state.profile.given_name}!
-                {this.state.profile.sub ? <TimeTrackerTable /> : ''}
+                {this.state.profile.sub ? <TimeTrackerTable profile={this.state.profile} /> : ''}
               </h4>
             )
         }

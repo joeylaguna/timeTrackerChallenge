@@ -10,7 +10,7 @@ app.post('/users/:userID/:name', (req, res) => {
   let userID = req.params.userID;
   let name = req.params.name;
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(`INSERT INTO tasks users ('${userID}', '${name}')`, function(err, result) {
+    client.query(`INSERT INTO tasks users ('${userID}', '${name}') ON CONFLICT DO NOTHING/UPDATE`, function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
