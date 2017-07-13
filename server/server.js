@@ -63,7 +63,7 @@ app.get('/users', function(request, response) {
 });
 
 app.post('/update/:userID/:index/:taskName/:timeSpent', function(request, response) {
-  let index = request.params.index;
+  let index = request.params.index+1;
   let taskName = request.params.taskName;
   let timeSpent = request.params.timeSpent;
   let userID = request.params.userID;
