@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import TimeTrackerTable from './../TimeTrackerTable.js';
+import { Button } from 'react-bootstrap';
+import AdminForm from './AdminForm.js';
+
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
-      profile: {}
+      profile: {},
+      adminActive: false
     }
+    this.showAdmin = this.showAdmin.bind(this);
   }
 
   componentWillMount() {
@@ -33,16 +38,31 @@ class Home extends Component {
     this.props.auth.login();
   }
 
+  showAdmin() {
+    this.setState({
+      adminActive: true
+    });
+  }
+
   render() {
     const { isAuthenticated } = this.props.auth;
     return (
       <div className="container">
         {
           isAuthenticated() && (
+            <div>
+              <Button
+                bsStyle="primary"
+                className="btn-margin"
+                onClick={this.showAdmin}
+              >
+                Profile
+              </Button>
               <h4>
                 Hello, {this.state.profile.given_name}!
                 {this.state.profile.sub ? <TimeTrackerTable profile={this.state.profile} /> : ''}
               </h4>
+            </div>
             )
         }
         {
