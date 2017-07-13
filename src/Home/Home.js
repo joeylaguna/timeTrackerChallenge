@@ -56,10 +56,11 @@ class Home extends Component {
                 className="btn-margin"
                 onClick={this.showAdmin}
               >
-                Profile
+                Admin Login
               </Button>
               <h4>
                 Hello, {this.state.profile.given_name}!
+                {this.state.adminActive ? <AdminForm /> : '' }
                 {this.state.profile.sub ? <TimeTrackerTable profile={this.state.profile} /> : ''}
               </h4>
             </div>
