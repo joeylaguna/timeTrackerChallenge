@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Form, FormGroup, Button, FormControl, ControlLabel, Modal } from 'react-bootstrap';
+import UpdateForm from './UpdateForm.js';
   
 class TimeTrackerTable extends Component {
   constructor() {
@@ -13,13 +14,16 @@ class TimeTrackerTable extends Component {
         }
       ],
       taskName: '',
-      timeSpent: ''
+      timeSpent: '',
+      updateIndex: '',
+      modalOpen: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateTaskName = this.updateTaskName.bind(this);
     this.updateTimeSpent = this.updateTimeSpent.bind(this);
     this.compareDate = this.compareDate.bind(this);
     this.showModal = this.showModal.bind(this);
+    this.updateItems = this.updateItems.bind(this);
   }
 
   handleSubmit(e) {
@@ -51,7 +55,6 @@ class TimeTrackerTable extends Component {
 
   compareDate(index) {
     let currentDate = new Date();
-    console.log(index);
     currentDate = currentDate.toISOString().substring(0, 10);
     if (currentDate === this.state.tasks[index].date) {
       return true;
@@ -60,12 +63,23 @@ class TimeTrackerTable extends Component {
   }
 
   showModal(index) {
-    console.log(index);
+    this.setState({
+      updateIndex: index,
+      modalOpen: true
+    });
+  }
+
+  updateItems(items) {
+    this.setState({
+      modalOpen: false,
+      tasks: items
+    });
   }
 
   render() {
     return (
       <div>
+        {this.state.modalOpen ? <UpdateForm tasks={this.state.tasks} index={this.state.updateIndex} updateItem={this.updateItems}/> : ''}
         <Form inline onSubmit={this.handleSubmit}>
           <FormGroup  controlId="formInlineName">
             <ControlLabel>Task</ControlLabel>
