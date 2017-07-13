@@ -13,9 +13,9 @@ app.post('/users/:userID/:name', (req, res) => {
     client.query(`INSERT INTO users values ('${userID}', '${name}')`, function(err, result) {
       done();
       if (err)
-       { console.error(err); response.send("Error " + err); }
+       { console.error(err); res.send("Error " + err); }
       else
-       { response.send(result); }
+       { res.send(result); }
     });
   });
 });
