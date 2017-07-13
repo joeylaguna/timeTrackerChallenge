@@ -8,7 +8,8 @@ class AdminForm extends Component {
     this.state = {
       userName: '',
       password: '',
-      correctDetails: false
+      correctDetails: false,
+      tasks: [],
     }
     this.updateUserName = this.updateUserName.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -36,18 +37,27 @@ class AdminForm extends Component {
     }
   }
 
+  componentDidMount() {
+    axios.get('/tasks')
+      .then((res) => {
+        this.setState({
+          tasks: res.data.rows
+        });
+      });
+  }
+
   render(){
     return (
       <div>
         <Form inline onSubmit={this.handleSubmit}>
           <FormGroup  controlId="formInlineName">
-            <ControlLabel>Update item # {this.props.index + 1}</ControlLabel>
+            <ControlLabel>Username:</ControlLabel>
             {' '}
             <FormControl onChange={this.updateUserName} type="text" value={this.state.userName}/>
           </FormGroup>
           {' '}
           <FormGroup controlId="formInlineEmail">
-            <ControlLabel>Time Spent</ControlLabel>
+            <ControlLabel>Password:</ControlLabel>
             {' '}
             <FormControl onChange={this.updatePassword} type="password"  value={this.state.password} />
             <Button type="submit">
@@ -68,6 +78,19 @@ class AdminForm extends Component {
             </tr>
           </thead>
           <tbody>
+            {
+              this.state.tasks.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.user_id}</td>
+                    <td>{item.task_name}</td>
+                    <td>{item.time_spent}</td>
+                    <td>{item.date}</td>
+                  </tr>
+                );
+              })
+            }
           </tbody>
         </Table>
           : ''

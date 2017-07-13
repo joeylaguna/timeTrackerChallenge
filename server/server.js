@@ -52,7 +52,7 @@ app.get('/tasks/:id', function(request, response) {
 
 app.get('/users', function(request, response) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(`SELECT * FROM users`, function(err, result) {
+    client.query(`SELECT user_id, name FROM users`, function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
@@ -69,6 +69,18 @@ app.post('/update/:userID/:index/:taskName/:timeSpent', function(request, respon
   let userID = request.params.userID;
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query(`UPDATE tasks SET task_name = '${taskName}', time_spent='${timeSpent}'  where id=${index} AND user_id='${userID}'`, function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.send(result); }
+    });
+  });
+});
+
+app.get('/tasks', function(request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query(`SELECT * FROM tasks`, function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
