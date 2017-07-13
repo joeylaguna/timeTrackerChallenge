@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import TimeTrackerTable from './../TimeTrackerTable.js';
 import { Button } from 'react-bootstrap';
-import AdminForm from './AdminForm.js';
+import AdminForm from './../AdminForm.js';
 
 
 class Home extends Component {
