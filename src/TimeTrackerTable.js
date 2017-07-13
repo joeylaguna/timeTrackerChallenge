@@ -117,7 +117,7 @@ class TimeTrackerTable extends Component {
   render() {
     return (
       <div>
-        {this.state.modalOpen ? <UpdateForm tasks={this.state.tasks} index={this.state.updateIndex} updateItem={this.updateItems} getTasks={this.getTasks}/> : ''}
+        {this.state.modalOpen ? <UpdateForm tasks={this.state.tasks} index={this.state.updateIndex} updateItem={this.updateItems} getTasks={this.getTasks} profile={this.props.profile}/> : ''}
         <Form inline onSubmit={this.handleSubmit}>
           <FormGroup  controlId="formInlineName">
             <ControlLabel>Task</ControlLabel>

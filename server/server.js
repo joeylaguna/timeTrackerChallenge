@@ -62,12 +62,13 @@ app.get('/users', function(request, response) {
   });
 });
 
-app.post('/update/:index/:taskName/:timeSpent', function(request, response) {
+app.post('/update/:userID/:index/:taskName/:timeSpent', function(request, response) {
   let index = request.params.index;
   let taskName = request.params.taskName;
   let timeSpent = request.params.timeSpent;
+  let userID = request.params.userID;
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(`UPDATE tasks SET task_name = ${taskName} time_spent=${timeSpent}  where id=${index};`, function(err, result) {
+    client.query(`UPDATE tasks SET task_name = ${taskName} time_spent=${timeSpent}  where id=${index} AND user_id=${userID};`, function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
