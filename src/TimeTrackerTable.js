@@ -46,11 +46,11 @@ class TimeTrackerTable extends Component {
     axios.post(`/tasks/${userID}/${newTask.task_name}/${newTask.timeSpent}`)
       .then((res) => {
         console.log(res);
+        this.getTasks();
       })
       .catch ((err) => {
         console.log(err);
       });
-    this.getTasks();
   }
 
   updateTaskName(e) {
