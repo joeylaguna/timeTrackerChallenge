@@ -27,7 +27,7 @@ class UpdateForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let index = this.props.index + 1;
+    let index = this.props.index;
     let tasks = this.props.tasks;
     let itemToUpdate = tasks[index];
     let userID = this.props.profile.sub.split('|')[1];
