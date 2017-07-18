@@ -71,7 +71,7 @@ class TimeTrackerTable extends Component {
 
   showModal(index) {
     this.setState({
-      updateIndex: index,
+      updateIndex: index+1,
       modalOpen: true
     });
   }
@@ -112,7 +112,7 @@ class TimeTrackerTable extends Component {
   render() {
     return (
       <div>
-        {this.state.modalOpen ? <UpdateForm tasks={this.state.tasks} index={this.state.updateIndex} updateItem={this.updateItems} getTasks={this.getTasks} profile={this.props.profile} index={this.state.tasks.length}/> : ''}
+        {this.state.modalOpen ? <UpdateForm tasks={this.state.tasks} index={this.state.updateIndex} updateItem={this.updateItems} getTasks={this.getTasks} profile={this.props.profile}/> : ''}
         <Form inline onSubmit={this.handleSubmit}>
           <FormGroup  controlId="formInlineName">
             <ControlLabel>Task</ControlLabel>
