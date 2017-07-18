@@ -37,7 +37,7 @@ class TimeTrackerTable extends Component {
     });
 
     let userID = this.props.profile.sub.split('|')[1];
-    let taskID = this.state.tasks.length + 1;
+    let taskID = this.state.tasks.length;
     axios.post(`/tasks/${userID}/${newTask.task_name}/${newTask.timeSpent}/${taskID}`)
       .then((res) => {
         console.log(res);
@@ -112,7 +112,7 @@ class TimeTrackerTable extends Component {
   render() {
     return (
       <div>
-        {this.state.modalOpen ? <UpdateForm tasks={this.state.tasks} index={this.state.updateIndex} updateItem={this.updateItems} getTasks={this.getTasks} profile={this.props.profile}/> : ''}
+        {this.state.modalOpen ? <UpdateForm tasks={this.state.tasks} index={this.state.updateIndex} updateItem={this.updateItems} getTasks={this.getTasks} profile={this.props.profile} index={this.state.tasks.length}/> : ''}
         <Form inline onSubmit={this.handleSubmit}>
           <FormGroup  controlId="formInlineName">
             <ControlLabel>Task</ControlLabel>
