@@ -29,7 +29,7 @@ app.post('/tasks/:userID/:task/:timeSpent/:taskID', (request, response) => {
   date = date.toISOString().substring(0, 10);
 
   pg.connect(process.env.DATABASE_URL, (err, client, done) => {
-    client.query(`INSERT INTO tasks (user_id, task_name, time_spent, date, task_id) values ($1, $2, ,$3, $4, $5)`, [userID, task, timeSpent, date, taskID] ,function(err, result) {
+    client.query(`INSERT INTO tasks (user_id, task_name, time_spent, date, task_id) values ($1,$2,$3,$4,$5)`, [userID, task, timeSpent, date, taskID] ,function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
