@@ -20,15 +20,16 @@ app.post('/users/:userID/:name', (req, res) => {
   });
 });
 
-app.post('/tasks/:userID/:task/:timeSpent/', function(request, response) {
+app.post('/tasks/:userID/:task/:timeSpent/:taskID', function(request, response) {
   let userID = request.params.userID;
   let task = request.params.task;
   let timeSpent = request.params.timeSpent;
+  let taskID = request.params.taskID;
   let date = new Date();
   date = date.toISOString().substring(0, 10);
 
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(`INSERT INTO tasks (user_id, task_name, time_spent, date) values ('${userID}', '${task}', '${timeSpent}', '${date}')`, function(err, result) {
+    client.query(`INSERT INTO tasks (user_id, task_name, time_spent, date, task_id) values ('${userID}', '${task}', '${timeSpent}', '${date}', ${taskID})`, function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }

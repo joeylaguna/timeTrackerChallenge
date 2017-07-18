@@ -7,13 +7,7 @@ class TimeTrackerTable extends Component {
   constructor() {
     super();
     this.state = {
-      tasks: [
-        {
-          'task_name': 'test task',
-          'timeSpent': '2 hours',
-          'date':  "2017-07-12"
-        }
-      ],
+      tasks: [],
       taskName: '',
       timeSpent: '',
       updateIndex: '',
@@ -43,7 +37,8 @@ class TimeTrackerTable extends Component {
     });
 
     let userID = this.props.profile.sub.split('|')[1];
-    axios.post(`/tasks/${userID}/${newTask.task_name}/${newTask.timeSpent}`)
+    let taskID = this.state.tasks.length + 1;
+    axios.post(`/tasks/${userID}/${newTask.task_name}/${newTask.timeSpent}/${taskID}`)
       .then((res) => {
         console.log(res);
         this.getTasks();
