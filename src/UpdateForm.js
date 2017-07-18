@@ -29,10 +29,7 @@ class UpdateForm extends Component {
     e.preventDefault();
     let index = this.props.index;
     let tasks = this.props.tasks;
-    let itemToUpdate = tasks[index];
     let userID = this.props.profile.sub.split('|')[1];
-    itemToUpdate['task_name'] = this.state.taskName;
-    itemToUpdate['timeSpent'] = this.state.timeSpent;
     axios.post(`/update/${userID}/${index}/${this.state.taskName}/${this.state.timeSpent}`)
       .then((res) => {
         console.log('Updating');
