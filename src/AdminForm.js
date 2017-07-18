@@ -54,6 +54,9 @@ class AdminForm extends Component {
         res.data.rows.forEach((user, index) => {
           let userID = user['user_id'];
           let userName = user['name'];
+          this.setState({
+            userID: userName
+          });
           axios.get(`/tasks/${userID}`)
             .then((response) => {
               this.buildTaskList(response.data.rows);
@@ -102,15 +105,13 @@ class AdminForm extends Component {
           <tbody>
             {
               this.state.tasks.map((item, index) => {
-                return item.map((taskList) => {
                   return (<tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{taskList.user_id}</td>
-                    <td>{taskList.task_name}</td>
-                    <td>{taskList.time_spent}</td>
-                    <td>{taskList.date}</td>
-                  </tr>)
-                });
+                    <td>{this.state.item.user_id}</td>
+                    <td>{item.task_name}</td>
+                    <td>{item.time_spent}</td>
+                    <td>{item.date}</td>
+                  </tr>);
               })
             }
           </tbody>
