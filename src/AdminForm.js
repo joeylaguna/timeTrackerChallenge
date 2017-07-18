@@ -86,7 +86,7 @@ class AdminForm extends Component {
             {' '}
             <FormControl onChange={this.updatePassword} type="password"  value={this.state.password} />
             <Button type="submit">
-              Update Task
+              Submit
             </Button>
           </FormGroup>
         </Form>

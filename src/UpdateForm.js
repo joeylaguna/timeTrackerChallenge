@@ -44,7 +44,7 @@ class UpdateForm extends Component {
       <div>
         <Form inline onSubmit={this.handleSubmit}>
           <FormGroup  controlId="formInlineName">
-            <ControlLabel>Update item # {this.props.index + 1}</ControlLabel>
+            <ControlLabel>Update item # {this.props.index}</ControlLabel>
             {' '}
             <FormControl onChange={this.updateTaskName} type="text" placeholder='Update Task' value={this.state.taskName}/>
           </FormGroup>
