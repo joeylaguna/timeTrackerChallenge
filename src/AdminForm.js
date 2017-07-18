@@ -56,7 +56,7 @@ class AdminForm extends Component {
           let userName = user['name'];
           axios.get(`/tasks/${userID}`)
             .then((response) => {
-              buildTaskList(response.data.rows);
+              this.buildTaskList(response.data.rows);
             })
             .catch((error) => {
               console.log(`got an error getting tasks for user: ${error}`)
