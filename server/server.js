@@ -20,7 +20,7 @@ app.post('/users/:userID/:name', (req, res) => {
   });
 });
 
-app.post('/tasks/:userID/:task/:timeSpent/:taskID', function(request, response) {
+app.post('/tasks/:userID/:task/:timeSpent/:taskID', (request, response) => {
   let userID = request.params.userID;
   let task = request.params.task;
   let timeSpent = request.params.timeSpent;
@@ -28,7 +28,7 @@ app.post('/tasks/:userID/:task/:timeSpent/:taskID', function(request, response) 
   let date = new Date();
   date = date.toISOString().substring(0, 10);
 
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  pg.connect(process.env.DATABASE_URL, (err, client, done) => {
     client.query(`INSERT INTO tasks (user_id, task_name, time_spent, date, task_id) values ('${userID}', '${task}', '${timeSpent}', '${date}', ${taskID})`, function(err, result) {
       done();
       if (err)
@@ -39,8 +39,8 @@ app.post('/tasks/:userID/:task/:timeSpent/:taskID', function(request, response) 
   });
 });
 
-app.get('/tasks/:id', function(request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+app.get('/tasks/:id', (request, response) => {
+  pg.connect(process.env.DATABASE_URL, (err, client, done) => {
     client.query(`SELECT * FROM tasks WHERE user_id='${request.params.id}' order by task_id`, function(err, result) {
       done();
       if (err)
@@ -51,9 +51,9 @@ app.get('/tasks/:id', function(request, response) {
   });
 });
 
-app.get('/users', function(request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(`SELECT user_id, name FROM users`, function(err, result) {
+app.get('/users', (request, response) => {
+  pg.connect(process.env.DATABASE_URL, (err, client, done) => {
+    client.query(`SELECT user_id, name FROM users`, (err, result) => {
       done();
       if (err)
        { console.error(err); response.send("Error " + err); }
@@ -63,12 +63,12 @@ app.get('/users', function(request, response) {
   });
 });
 
-app.post('/update/:userID/:index/:taskName/:timeSpent', function(request, response) {
+app.post('/update/:userID/:index/:taskName/:timeSpent', (request, response) => {
   let index = request.params.index;
   let taskName = request.params.taskName;
   let timeSpent = request.params.timeSpent;
   let userID = request.params.userID;
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  pg.connect(process.env.DATABASE_URL, (err, client, done) => {
     client.query(`UPDATE tasks SET task_name = '${taskName}', time_spent='${timeSpent}'  where task_id=${index} AND user_id='${userID}'`, function(err, result) {
       done();
       if (err)
@@ -79,8 +79,8 @@ app.post('/update/:userID/:index/:taskName/:timeSpent', function(request, respon
   });
 });
 
-app.get('/tasks', function(request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+app.get('/tasks', (request, response) => {
+  pg.connect(process.env.DATABASE_URL, (err, client, done) => {
     client.query(`SELECT * FROM tasks`, function(err, result) {
       done();
       if (err)
