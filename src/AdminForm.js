@@ -10,10 +10,12 @@ class AdminForm extends Component {
       password: '',
       correctDetails: false,
       tasks: [],
+      users: []
     }
     this.updateUserName = this.updateUserName.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.buildTaskList = this.buildTaskList.bind(this);
   }
 
   updateUserName(e) {
@@ -37,12 +39,32 @@ class AdminForm extends Component {
     }
   }
 
+  buildTaskList(tasks) {
+    this.setState({
+      tasks: this.state.tasks.concat(tasks)
+    });
+  }
+
   componentDidMount() {
-    axios.get('/tasks')
+    axios.get('/users')
       .then((res) => {
         this.setState({
-          tasks: res.data.rows
+          users: res.data.rows
         });
+        res.data.rows.forEach((user, index) => {
+          let userID = user['user_id'];
+          let userName = user['name'];
+          axios.get(`/tasks/${userID}`)
+            .then((response) => {
+              buildTaskList(response.data.rows);
+            })
+            .catch((error) => {
+              console.log(`got an error getting tasks for user: ${error}`)
+            });
+        })
+      })
+      .catch((err) => {
+        console.log(`got error trying to get user list: ${err}`);
       });
   }
 
@@ -80,15 +102,15 @@ class AdminForm extends Component {
           <tbody>
             {
               this.state.tasks.map((item, index) => {
-                return (
-                  <tr key={index}>
+                return item.map((taskList) => {
+                  return (<tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{item.user_id}</td>
-                    <td>{item.task_name}</td>
-                    <td>{item.time_spent}</td>
-                    <td>{item.date}</td>
-                  </tr>
-                );
+                    <td>{taskList.user_id}</td>
+                    <td>{taskList.task_name}</td>
+                    <td>{taskList.time_spent}</td>
+                    <td>{taskList.date}</td>
+                  </tr>)
+                });
               })
             }
           </tbody>
